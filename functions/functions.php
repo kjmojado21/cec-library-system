@@ -192,8 +192,9 @@ function get_specific_book_detail($id)
 
 function reserve_book($book_id, $student_id)
 {
+    $current_date = date("Y/m/d");
     $conn = db_connect();
-    $sql = "INSERT INTO borrowed_books(student_id,book_id)VALUES('$student_id','$book_id')";
+    $sql = "INSERT INTO borrowed_books(student_id,book_id,date_borrowed)VALUES('$student_id','$book_id','$current_date')";
     $result = $conn->query($sql);
 
     if ($result == TRUE) {
@@ -295,15 +296,15 @@ function get_book_date_only($id){
         echo "ERROR";
     }
 }
-function get_penalty_pay($borrow_id){
- $date = get_book_date_only($borrow_id);
- $dayFromDb = intval($date['day']);
+// function get_penalty_pay($borrow_id){
+//  $date = get_book_date_only($borrow_id);
+//  $dayFromDb = intval($date['day']);
 
-  $current_date = date("d");
-  $validate_penalty =  $current_date - $dayFromDb;
-  $penalty = 5;
-  return $penaltyPay = ($validate_penalty - 2) * $penalty;
-}
+//   $current_date = date("d");
+//   $validate_penalty =  $current_date - $dayFromDb;
+//   $penalty = 5;
+//   return $penaltyPay = ($validate_penalty - 2) * $penalty;
+// }
 
 function count_student_currently_borrowed_books($id){
     $sql = "SELECT * FROM BORROWED_BOOKS WHERE student_id = '$id' AND status='BORROWED'";
